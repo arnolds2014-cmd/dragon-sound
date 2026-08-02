@@ -38,18 +38,18 @@ jobs:
         run: npx expo prebuild --platform android --skip-dependency-validation
 
       - name: Set executable permissions
-        run: chmod +x aplicación/gradlew
+        run: chmod +x app/gradlew
 
       - name: Build release APK
         env:
           ANDROID_HOME: /usr/local/lib/android/sdk
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         run: |
-          cd aplicación
+          cd app
           ./gradlew assembleRelease --no-daemon --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: dragon-sound-apk
-          path: aplicación/app/build/outputs/apk/release/*.apk
+          path: app/app/build/outputs/apk/release/*.apk
