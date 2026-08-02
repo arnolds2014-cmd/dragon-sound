@@ -18,8 +18,6 @@ out/
 # Gradle files
 .gradle/
 build/
-gradlew
-gradlew.bat
 gradle/
 
 # Local configuration file
