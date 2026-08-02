@@ -15,49 +15,41 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '18'
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: 'temurin'
           java-version: '17'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Install dependencies
-        run: npm install
-
-      - name: Install Android SDK tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip
-          ANDROID_SDK_ROOT="$RUNNER_TEMP/android-sdk"
-          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
-          cd "$ANDROID_SDK_ROOT/cmdline-tools"
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline.zip
-          unzip -q cmdline.zip -d .
-          mv cmdline-tools latest
-          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" --install "platform-tools" "platforms;android-34" "build-tools;36.0.0" "ndk;27.1.12297006"
-          # Set ANDROID_HOME to the SDK path (and keep ANDROID_SDK_ROOT in sync) to avoid conflicting locations
-          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-
-      - name: Set executable permissions
-        run: chmod +x ./gradlew
+        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
       - name: Run Expo prebuild for Android
         env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-        run: npx expo prebuild --platform android
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: npx expo prebuild --platform android --skip-dependency-validation
+
+      - name: Set executable permissions
+        run: chmod +x aplicación/gradlew
 
       - name: Build release APK
         env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-        run: ./gradlew -g .gradle assembleRelease --no-daemon --stacktrace
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: |
+          cd aplicación
+          ./gradlew assembleRelease --no-daemon --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: dragon-sound-apk
-          path: app/build/outputs/apk/release/*.apk
+          path: aplicación/app/build/outputs/apk/release/*.apk
