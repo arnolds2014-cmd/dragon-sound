@@ -39,6 +39,8 @@ jobs:
           unzip -q cmdline.zip -d .
           mv cmdline-tools latest
           yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" --install "platform-tools" "platforms;android-34" "build-tools;36.0.0" "ndk;27.1.12297006"
+          # Set ANDROID_HOME to the SDK path (and keep ANDROID_SDK_ROOT in sync) to avoid conflicting locations
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
 
       - name: Set executable permissions
@@ -46,12 +48,12 @@ jobs:
 
       - name: Run Expo prebuild for Android
         env:
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
         run: npx expo prebuild --platform android
 
       - name: Build release APK
         env:
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
         run: ./gradlew -g .gradle assembleRelease --no-daemon --stacktrace
 
       - name: Upload APK artifact
