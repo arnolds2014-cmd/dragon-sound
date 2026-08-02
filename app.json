@@ -3,8 +3,38 @@
     "name": "Dragon Sound",
     "slug": "dragon-sound",
     "version": "1.0.0",
+    "sdkVersion": "48.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#121212"
+    },
     "android": {
-      "package": "com.audifono.propietario"
+      "package": "com.audifono.propietario",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#121212"
+      },
+      "config": {
+        "ndk": {
+          "abiFilters": ["armeabi-v7a"]
+        }
+      },
+      "permissions": [
+        "RECORD_AUDIO",
+        "MODIFY_AUDIO_SETTINGS",
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_CONNECT",
+        "ACCESS_WIFI_STATE",
+        "CHANGE_WIFI_STATE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "WAKE_LOCK"
+      ]
     }
   }
 }

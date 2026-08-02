@@ -1,35 +1,5 @@
-{
-  "expo": {
-    "name": "Mi Audifono Propietario",
-    "slug": "audifono-propietario",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#121212"
-    },
-    "android": {
-      "package": "com.audifono.propietario",
-      "config": {
-        "ndk": {
-          "abiFilters": ["armeabi-v7a"]
-        }
-      },
-      "permissions": [
-        "RECORD_AUDIO",
-        "MODIFY_AUDIO_SETTINGS",
-        "BLUETOOTH",
-        "BLUETOOTH_ADMIN",
-        "BLUETOOTH_CONNECT",
-        "ACCESS_WIFI_STATE",
-        "CHANGE_WIFI_STATE",
-        "INTERNET",
-        "ACCESS_NETWORK_STATE",
-        "WAKE_LOCK"
-      ]
-    }
-  }
-}
+# DEPRECATED: misnamed Expo config
+
+This file was previously present as `pACKAGGE.json` but the Expo CLI uses `app.json` or `app.config.js` and the configuration has been consolidated into `app.json`.
+
+Do not use this file. It has been left here as a marker for migration.
