@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Audífono Propietario</string>
+    <string name="app_title">Audífono 130dB</string>
+    <string name="start_button">▶ ACTIVAR</string>
+    <string name="stop_button">⏹ DETENER</string>
+    <string name="gain_label">Ganancia</string>
+    <string name="filter_label">Filtro</string>
+    <string name="bluetooth_label">Bluetooth</string>
+    <string name="wifi_label">WiFi</string>
+    <string name="status_active">Estado: ACTIVO</string>
+    <string name="status_inactive">Estado: DETENIDO</string>
+</resources>

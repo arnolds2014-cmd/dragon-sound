@@ -1,0 +1,8 @@
+# Configuración local (NO commitar a repositorio)
+# Ajusta la ruta según tu sistema
+
+# Ruta al Android SDK
+sdk.dir=/home/elmer/Android/Sdk
+
+# Nota: Si usas Android Studio, esta archivo se genera automáticamente
+# en la sección SDK Location del Project Structure

@@ -1,0 +1,9 @@
+rootProject.name = "Audifono Propietario"
+include ':app'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Dragon Sound",
+    "slug": "dragon-sound",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.audifono.propietario"
+    }
+  }
+}
