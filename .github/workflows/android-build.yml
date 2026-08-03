@@ -34,13 +34,13 @@ jobs:
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         run: |
           if [ -f "gradlew" ]; then
-            ./gradlew assembleRelease --no-daemon --stacktrace
+            ./gradlew assembleDebug --no-daemon --stacktrace
           else
-            cd app && ./gradlew assembleRelease --no-daemon --stacktrace
+            cd app && ./gradlew assembleDebug --no-daemon --stacktrace
           fi
 
       - name: Upload Core APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: dragon-sound-core-apk
-          path: "**/build/outputs/apk/release/*.apk"
+          path: "**/build/outputs/apk/debug/*.apk"
