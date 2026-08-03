@@ -16,18 +16,17 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // Configuración para compilar C/C++ nativo (TEMPORALMENTE DESHABILITADO)
-        // ndk {
-             abiFilters 'armeabi-v7a', 'arm64-v8a'
-        // }
+        // Configuración para compilar C/C++ nativo (¡ACTIVADO!)
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
 
-        // externalNativeBuild {
-        //     cmake {
-        //         cppFlags "-fexceptions"
-        //         arguments "-DANDROID_ARM_NEON=ON"
-        //     }
-        // }
-    }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fexceptions"
+                arguments "-DANDROID_ARM_NEON=ON"
+            }
+        }
 
     lint {
         abortOnError false
