@@ -1,40 +1,31 @@
 {
   "expo": {
-    "name": "Dragon Sound",
-    "slug": "dragon-sound",
+    "name": "Audifono Propietario",
+    "slug": "audifono-propietario",
     "version": "1.0.0",
-    "sdkVersion": "48.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#121212"
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
     },
     "android": {
       "package": "com.audifono.propietario",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#121212"
-      },
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
       "config": {
         "ndk": {
-          "abiFilters": ["armeabi-v7a"]
+          "cFlags": ["-std=c++17", "-O3"],
+          "abiFilters": ["armeabi-v7a", "arm64-v8a"]
         }
-      },
-      "permissions": [
-        "RECORD_AUDIO",
-        "MODIFY_AUDIO_SETTINGS",
-        "BLUETOOTH",
-        "BLUETOOTH_ADMIN",
-        "BLUETOOTH_CONNECT",
-        "ACCESS_WIFI_STATE",
-        "CHANGE_WIFI_STATE",
-        "INTERNET",
-        "ACCESS_NETWORK_STATE",
-        "WAKE_LOCK"
-      ]
+      }
     }
   }
 }
