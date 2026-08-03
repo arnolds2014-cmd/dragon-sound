@@ -39,15 +39,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         
-        // LÍNEA CRÍTICA: Le ordena a la TV Box mostrar esta ventana por encima de TODO
-        getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
-        
-        // Hace que la ventana no bloquee los clics en los menús de fondo de la TV Box
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE 
-            | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-            | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-
         // Inicializar componentes
         initializeUI();
         requestPermissions();
