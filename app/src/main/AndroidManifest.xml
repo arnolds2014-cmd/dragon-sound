@@ -2,14 +2,10 @@
 <manifest xmlns:android="http://android.com"
     package="com.audifono.propietario">
 
-    <!-- Permisos de Hardware de Audio y Conectividad -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    
-    <!-- Permiso del Sistema para Superposición de Pantalla -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +13,7 @@
         android:label="Audifono Propietario"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         
         <activity
             android:name=".MainActivity"
