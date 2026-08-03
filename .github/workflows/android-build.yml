@@ -28,6 +28,17 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install ImageMagick to generate real PNGs
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Generate Real PNG Assets
+        run: |
+          mkdir -p app/assets
+          # Crear iconos reales con fondo azul médico profesional
+          convert -size 512x512 xc:#0055ff app/assets/icon.png
+          convert -size 1024x1024 xc:#0055ff app/assets/adaptive-icon.png
+          convert -size 1280x1920 xc:#0055ff app/assets/splash.png
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
