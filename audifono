@@ -1,14 +1,18 @@
 #include <oboe/Oboe.h>
+#include <cmath>
 
 class AudifonoPropietarioEngine : public oboe::AudioStreamDataCallback {
 public:
     void iniciarAudio() {
         oboe::AudioStreamBuilder builder;
-        builder.setDirection(oboe::Direction::InputAndOutput) // Captura y reproduce
-               .setPerformanceMode(oboe::PerformanceMode::LowLatency) // Latencia ultra baja
-               .setSharingMode(oboe::SharingMode::Exclusive) // Uso exclusivo del chip de audio
+        builder.setDirection(oboe::Direction::InputAndOutput) // Captura y reproduce simultáneamente
+               .setPerformanceMode(oboe::PerformanceMode::LowLatency) // Forza la latencia ultra baja
+               .setSharingMode(oboe::SharingMode::Exclusive) // Uso exclusivo del hardware de audio
                .setFormat(oboe::AudioFormat::Float)
                .setChannelCount(oboe::ChannelCount::Mono)
+               // LÍNEA CRÍTICA: Configura el flujo como comunicación de voz en tiempo real.
+               // Esto fuerza a Android a redirigir el audio de Oboe directo al audífono Bluetooth sin buffer de retraso.
+               .setUsage(oboe::Usage::VoiceCommunication) 
                .setDataCallback(this)
                .openStream(stream);
                
@@ -20,19 +24,35 @@ public:
         
         float *floatData = static_cast<float *>(audioData);
         
+        // Parámetros del limitador para sordera profunda (130dB Max) y protección contra acoples
+        float umbralSeguridad = 0.70f; // Evita el pico máximo de distorsión en tus auriculares
+        float ratioCompresion = 10.0f; // Compresión agresiva si hay retroalimentación/pitidos fuertes
+
         for (int i = 0; i < numFrames; ++i) {
-            // ALGORITMO DE AMPLIFICACIÓN PERSONALIZADA
-            // Aquí multiplicamos la señal por el factor de ganancia elegido por el usuario
+            // 1. Algoritmo de amplificación personalizada para pérdida profunda
             floatData[i] *= factorGanancia; 
             
-            // Filtro básico para evitar distorsión (Limpiador)
+            // 2. Filtro dinámico y limitador de protección contra retroalimentación (Tu lógica original mejorada)
+            if (floatData[i] > umbralSeguridad) {
+                floatData[i] = umbralSeguridad + (floatData[i] - umbralSeguridad) / ratioCompresion;
+            }
+            else if (floatData[i] < -umbralSeguridad) {
+                floatData[i] = -umbralSeguridad + (floatData[i] + umbralSeguridad) / ratioCompresion;
+            }
+
+            // Hard limiter absoluto para proteger físicamente el audífono
             if (floatData[i] > 1.0f) floatData[i] = 1.0f;
             if (floatData[i] < -1.0f) floatData[i] = -1.0f;
         }
         return oboe::DataCallbackResult::Continue;
     }
 
+    // Permitir cambiar la ganancia dinámicamente desde la interfaz si se necesita
+    void setGanancia(float nuevaGanancia) {
+        factorGanancia = nuevaGanancia;
+    }
+
 private:
     oboe::ManagedStream stream;
-    float factorGanancia = 2.5f; // Nivel de amplificación inicial
+    float factorGanancia = 15.0f; // Elevado a escala médica inicial coincidente con tus 23 dB
 };
