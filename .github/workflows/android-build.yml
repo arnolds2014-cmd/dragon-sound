@@ -33,11 +33,8 @@ jobs:
 
       - name: Generate Real PNG Assets
         run: |
-          # Eliminar los archivos corruptos/vacios previos
           rm -f assets/icon.png assets/adaptive-icon.png assets/splash.png
           mkdir -p assets
-          
-          # Crear imágenes PNG reales con fondo azul médico en la raíz correcta
           convert -size 512x512 xc:#0055ff assets/icon.png
           convert -size 1024x1024 xc:#0055ff assets/adaptive-icon.png
           convert -size 1280x1920 xc:#0055ff assets/splash.png
@@ -52,18 +49,18 @@ jobs:
         run: npx expo prebuild --platform android
 
       - name: Set executable permissions
-        run: chmod +x app/gradlew
+        run: chmod +x android/gradlew
 
       - name: Build release APK
         env:
           ANDROID_HOME: /usr/local/lib/android/sdk
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         run: |
-          cd app
+          cd android
           ./gradlew assembleRelease --no-daemon --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: dragon-sound-apk
-          path: app/app/build/outputs/apk/release/*.apk
+          path: android/app/build/outputs/apk/release/*.apk
