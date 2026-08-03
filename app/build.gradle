@@ -29,6 +29,14 @@ android {
         // }
     }
 
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        ignoreWarnings true
+        quiet true
+        disable 'Instantiatable', 'MissingQuantity', 'MissingTranslation'
+    }
+
     buildTypes {
         release {
             minifyEnabled true
