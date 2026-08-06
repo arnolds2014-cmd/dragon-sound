@@ -107,11 +107,18 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        startButton.setOnClickListener(v -> {
-            audioService.iniciarAudifono();
+               startButton.setOnClickListener(v -> {
+            Intent serviceIntent = new Intent(MainActivity.this, AudioService.class);
+            serviceIntent.setAction("START");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent);
+            } else {
+                startService(serviceIntent);
+            }
             statusTextView.setText("Estado: ACTIVO");
             statusTextView.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         });
+
 
         stopButton.setOnClickListener(v -> {
             audioService.detenerAudifono();
