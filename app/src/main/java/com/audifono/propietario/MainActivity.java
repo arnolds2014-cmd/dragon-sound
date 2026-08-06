@@ -107,24 +107,11 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-                       startButton.setOnClickListener(v -> {
-            // 1. Tu comando original exacto que sí encendía el audio y los auriculares perfectamente
+        startButton.setOnClickListener(v -> {
             audioService.iniciarAudifono();
-
-            // 2. El comando del sistema que le avisa a Android que proteja el proceso en segundo plano
-            Intent serviceIntent = new Intent(MainActivity.this, AudioService.class);
-            serviceIntent.setAction("START");
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                startForegroundService(serviceIntent);
-            } else {
-                startService(serviceIntent);
-            }
-
             statusTextView.setText("Estado: ACTIVO");
             statusTextView.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         });
-
-
 
         stopButton.setOnClickListener(v -> {
             audioService.detenerAudifono();
