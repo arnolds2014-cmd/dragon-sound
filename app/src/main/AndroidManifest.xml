@@ -45,12 +45,14 @@
             </intent-filter>
         </activity>
 
-        <!-- Servicio de Audio en Background -->
+                <!-- Servicio de Audio en Background -->
         <service
             android:name=".AudioService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
 
     </application>
 
 </manifest>
+
